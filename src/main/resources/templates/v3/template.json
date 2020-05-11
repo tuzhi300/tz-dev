@@ -1,0 +1,77 @@
+[
+  {
+    "file": "Entity",
+    "out": "java/src/main/java/${package}/${module}/entity/${table.className}Entity",
+    "outType": "java"
+  },
+  {
+    "file": "Update",
+    "out": "java/src/main/java/${package}/${module}/entity/${table.className}UpdateEntity",
+    "outType": "java"
+  },
+  {
+    "file": "Query",
+    "out": "java/src/main/java/${package}/${module}/entity/${table.className}QueryEntity",
+    "outType": "java"
+  },
+  {
+    "file": "Controller",
+    "out": "java/src/main/java/${package}/${module}/controller/${table.className}Controller",
+    "outType": "java"
+  },
+  {
+    "file": "Service",
+    "out": "java/src/main/java/${package}/${module}/service/${table.className}Service",
+    "outType": "java"
+  },
+  {
+    "file": "ServiceImpl",
+    "out": "java/src/main/java/${package}/${module}/service/impl/${table.className}ServiceImpl",
+    "outType": "java"
+  },
+  {
+    "file": "Dao",
+    "out": "java/src/main/java/${package}/${module}/dao/${table.className}Dao",
+    "outType": "java"
+  },
+  {
+    "file": "DaoMapper",
+    "out": "java/src/main/resources/mapper/${module}/${table.className}Mapper",
+    "outType": "xml"
+  },
+  {
+    "file": "Sql",
+    "out": "java/${table.className}",
+    "outType": "sql"
+  },
+  {
+    "file": "v-form",
+    "out": "html/src/views/${module}/${table.memberName}/module/form",
+    "outType": "vue"
+  },
+  {
+    "file": "v-add",
+    "out": "html/src/views/${module}/${table.memberName}/module/add",
+    "outType": "vue"
+  },
+  {
+    "file": "v-modify",
+    "out": "html/src/views/${module}/${table.memberName}/module/modify",
+    "outType": "vue"
+  },
+  {
+    "file": "v-filter",
+    "out": "html/src/views/${module}/${table.memberName}/module/filter",
+    "outType": "vue"
+  },
+  {
+    "file": "v-index",
+    "out": "html/src/views/${module}/${table.memberName}/index",
+    "outType": "vue"
+  },
+  {
+    "file": "v-api",
+    "out": "html/src/api/${module}/${table.memberName}",
+    "outType": "js"
+  }
+]

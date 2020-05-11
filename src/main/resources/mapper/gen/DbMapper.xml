@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.kuper.tz.dev.dao.DbDao">
+
+    <resultMap id="schemaMap" type="net.kuper.tz.dev.entity.SchemaEntity">
+        <result column="catalog_name" property="catalogName"/>
+        <result column="schema_name" property="schemaName"/>
+        <result column="default_character_set_name" property="characterSetName"/>
+        <result column="default_collation_name" property="collationName"/>
+    </resultMap>
+
+
+    <resultMap id="tableMap" type="net.kuper.tz.dev.entity.TableEntity">
+        <result column="table_name" property="name"/>
+        <result column="engine" property="engine"/>
+        <result column="table_comment" property="comment"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+
+    <resultMap id="columnMap" type="net.kuper.tz.dev.entity.ColumnEntity">
+        <result column="column_name" property="name"/>
+        <result column="data_type" property="dataType"/>
+        <result column="column_comment" property="comment"/>
+        <result column="column_key" property="columnKey"/>
+        <result column="extra" property="extra"/>
+        <result column="length" property="length"/>
+        <result column="nullable" property="nullable"/>
+        <result column="default_value" property="defaultValue"/>
+    </resultMap>
+
+    <select id="querySchemaList" resultMap="schemaMap">
+		select catalog_name,schema_name,default_character_set_name,default_collation_name
+		from `information_schema`.`schemata` _schema
+		where (_schema.schema_name not in ('information_schema','mysql','performance_schema','test','sys'))
+		order by _schema.schema_name asc
+	</select>
+
+    <select id="queryTableList" parameterType="net.kuper.tz.dev.param.TablePaginationQuery" resultMap="tableMap">
+        select table_name , engine, table_comment , create_time
+        from information_schema.tables
+        where table_schema = #{schemaName}
+        <if test="tableName != null and tableName.trim() != ''">
+            and table_name like concat('%', #{tableName}, '%')
+        </if>
+        order by create_time desc
+    </select>
+
+
+    <select id="queryTables" parameterType="net.kuper.tz.dev.param.TableQuery" resultMap="tableMap">
+        select table_name , engine, REPLACE(table_comment,'\n',' ') as table_comment , create_time
+        from information_schema.tables
+        where table_schema = #{schemaName}
+        and table_name in
+        <foreach item="name" collection="tableNames" open="(" separator="," close=")">
+            #{name}
+        </foreach>
+        order by table_name desc
+    </select>
+
+    <select id="queryColumnList" parameterType="net.kuper.tz.dev.param.ColumnQuery" resultMap="columnMap">
+		select column_name , data_type , REPLACE(column_comment,'\n',' ') as column_comment, column_key , extra , CHARACTER_MAXIMUM_LENGTH as length, IS_NULLABLE as nullable, column_default as default_value
+		from information_schema.columns
+ 		where table_name = #{tableName} and table_schema = #{schemaName} order by ordinal_position
+	</select>
+
+</mapper>
